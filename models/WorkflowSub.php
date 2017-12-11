@@ -10,9 +10,9 @@
 
 namespace anlewo\workflow\models;
 
-use yii\web\Model;
+use yii\db\ActiveRecord;
 
-class WorkflowSub extends Model
+class WorkflowSub extends ActiveRecord
 {
     /**
      * @inheritdoc
