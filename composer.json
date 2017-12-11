@@ -1,20 +1,19 @@
 {
-  "name": "jingshou/yii2-workflow",
-  "description": "工作流程 yii2 workflow",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "井寿",
-      "email": "liufujingshou@anlewo.com"
+    "name": "jingshou/yii2-workflow",
+    "description": "yii2 workflow",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "jingshou",
+            "email": "jingshou013@163.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "jingshou\\yii2-workflow": ""
+        }
     }
-  ],
-  "minimum-stability": "dev",
-  "require": {
-    "php": ">=5.4.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "jingshou\\yii2-workflow": ""
-    }
-  }
 }
