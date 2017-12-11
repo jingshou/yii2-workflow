@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "jingshou\\yii2-workflow": ""
+            "jingshou\\yii2-workflow\\": ""
         }
     }
 }
