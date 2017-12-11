@@ -10,9 +10,9 @@
 
 namespace anlewo\workflow\models;
 
-use yii\web\Model;
+use yii\db\ActiveRecord;
 
-class Workflow extends Model
+class Workflow extends ActiveRecord
 {
 
     const TYPE_APPROVAL_PURCHASE = 1; // 采购单审批
