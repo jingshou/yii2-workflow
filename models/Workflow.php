@@ -10,6 +10,7 @@
 
 namespace anlewo\workflow\models;
 
+use Yii;
 use yii\db\ActiveRecord;
 
 class Workflow extends ActiveRecord
@@ -34,6 +35,50 @@ class Workflow extends ActiveRecord
     public static function tableName()
     {
         return '{{%workflow}}';
+    }
+
+    /**
+     * 创建审批类型
+     * @param $data
+     * @throws \Exception
+     * @return boolean
+     */
+    public static function addWorkflow($data)
+    {
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+
+            self::exitWorkflow($data['type']);
+
+            $model = new self();
+            $model->scenario = 'add';
+            if (!$model->load($data, '') || !$model->save()) {
+                throw new \Exception($model->getErrors());
+            }
+
+            $trans->commit();
+
+            return true;
+
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            throw new \Exception($e->getMessage());
+        }
+    }
+
+    /**
+     * 检测是否存在相同类型审批类型
+     * @param $type
+     * @return bool
+     * @throws \Exception
+     */
+    public static function exitWorkflow($type)
+    {
+        $model = self::find()->where(['type' => $type, 'isDel' => 0])->one();
+        if (!empty($model)) {
+            throw new \Exception('审批类型已经存在，请更新或删除！');
+        }
+        return true;
     }
 
     /**
@@ -93,6 +138,13 @@ class Workflow extends ActiveRecord
             'modifier' => '更新时间',
             'modified' => '更新人',
             'isDel' => '删除 0：未删除 1：删除',
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            'add' => ['name', 'type', 'created', 'creater'],
         ];
     }
 }

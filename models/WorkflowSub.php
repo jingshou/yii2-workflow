@@ -11,6 +11,7 @@
 namespace anlewo\workflow\models;
 
 use yii\db\ActiveRecord;
+use Yii;
 
 class WorkflowSub extends ActiveRecord
 {
@@ -20,6 +21,27 @@ class WorkflowSub extends ActiveRecord
     public static function tableName()
     {
         return '{{%workflow_sub}}';
+    }
+
+    public static function addSub($data)
+    {
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+
+            $model = new self();
+            $model->scenario = 'add';
+            if (!$model->load($data, '') || !$model->save()) {
+                throw new \Exception($model->getErrors());
+            }
+
+            $trans->commit();
+
+            return true;
+
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            throw new \Exception($e->getMessage());
+        }
     }
 
     /**

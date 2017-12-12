@@ -11,24 +11,25 @@
 namespace anlewo\workflow\controllers;
 
 use anlewo\workflow\models\search\WorkflowSearch;
-use anlewo\workflow\models\Workflow;
+use anlewo\workflow\models\search\WorkflowSubSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
 
-class WorkflowController extends Controller
+class WorkflowSubController extends Controller
 {
     /**
      * 审批列表
      * @return string
      */
-    public function actionIndex()
+    public function actionList()
     {
-
-        $search = new WorkflowSearch();
+        $data = Yii::$app->request->queryParams;
+        $search = new WorkflowSubSearch();
+        $search->load($data);
         $dataProvider = $search->search();
 
-        return $this->render('index', [
+        return $this->renderAjax('/workflow-sub/list', [
             'dataProvider' => $dataProvider,
         ]);
     }

@@ -11,29 +11,14 @@
 namespace anlewo\workflow\models\search;
 
 use anlewo\workflow\models\Workflow;
+use anlewo\workflow\models\WorkflowSub;
 use yii\data\ActiveDataProvider;
 
-class WorkflowSearch extends Workflow
+class WorkflowSubSearch extends WorkflowSub
 {
     const PAGE_SIZE = 1000;
 
-    public function rules()
-    {
-        return [
-            [['name'], 'string'],
-            [['type', 'created'], 'integer'],
-            [['name', 'type'], 'required'],
-        ];
-    }
-
-    public function attributeLabels()
-    {
-        return [
-            'name' => '审批名称',
-            'type' => '审批类型',
-            'created' => '创建时间',
-        ];
-    }
+    public $expandRowKey;
 
     public function search()
     {
@@ -52,7 +37,7 @@ class WorkflowSearch extends Workflow
 
     public function setCondition()
     {
-        $query = self::find()->where(['isDel' => 0]);
+        $query = self::find();
         return $query;
     }
 }

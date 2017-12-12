@@ -9,8 +9,12 @@
  */
 
 use kartik\grid\GridView;
+use yii\helpers\Html;
 use yii\helpers\Url;
-$this->title = '审批流程'
+
+$this->title = '审批流程';
+
+$this->registerJs($this->render('js/index.js'));
 ?>
 
 <section class="content-header">
@@ -36,7 +40,8 @@ $this->title = '审批流程'
                 'type' => '',
                 'heading' => false,
                 'footer' => false,
-                'before' => false,
+                'before' => Html::button('<i class="glyphicon glyphicon-plus"></i> 新增',
+                    ['class' => 'btn btn-success', 'id' => 'add-Workflow-Button', 'data-url' => Url::toRoute(['add'])]),
                 'after' => '{pager}',
             ],
             'export' => false,
@@ -47,26 +52,47 @@ $this->title = '审批流程'
                     'value' => function ($model, $key, $index, $column) {
                         return GridView::ROW_COLLAPSED;
                     },
-                    'detailUrl' => Url::to(['detail/list']),
+                    'detailUrl' => Url::to(['workflow-sub/list']),
                     'enableRowClick' => false,
                 ],
                 [
                     'attribute' => 'name',
-                    'header' => '审批类型名称',
                     'width' => '260px',
                 ],
                 [
                     'attribute' => 'type',
-                    'header' => '审批类型',
                     'width' => '260px',
+                    'value' => function ($model) {
+                        return $model->typeApprovalMsg;
+                    }
                 ],
                 [
                     'attribute' => 'created',
-                    'header' => '创建时间',
                     'width' => '260px',
+                    'format' => 'date',
+                ],
+                [
+                    'class' => 'kartik\grid\ActionColumn',
+                    'header' => '操作',
+                    'headerOptions' => ['class' => 'kartik-sheet-style'],
+                    'width' => '200px',
+                    'buttons' => [
+                        'view' => function ($url, $model) {
+                            return '';
+                        },
+                        'delete' => function ($url, $model) {
+                            return Html::a('<i class="glyphicon glyphicon-remove"></i>删除');
+                        },
+                        'update' => function ($url, $model) {
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>编辑', $url, ['class' => 'update-button']);
+                        },
+                    ],
                 ],
             ]
         ]);
         ?>
     </div>
 </section>
+
+<!-- 新增内容 -->
+<div id="add-workflow-con" class="modal order-modal fade" role="dialog"></div>
