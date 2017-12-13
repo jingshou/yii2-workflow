@@ -69,4 +69,58 @@ class WorkflowController extends Controller
             'model' => $search
         ]);
     }
+
+    /**
+     * 编辑审批
+     * @param $id
+     * @return array|string
+     */
+    public function actionEdit($id)
+    {
+
+        if (Yii::$app->request->isPost) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            try {
+                $data = Yii::$app->request->post('Workflow');
+                $data = array_merge($data, [
+                    'modifier' => Yii::$app->getUser()->identity->name,
+                    'modified' => time(),
+                ]);
+
+                $res = Workflow::editWorkflow($data);
+
+                return [
+                    'success' => true,
+                    'msg' => '保存成功',
+                ];
+
+            } catch (\Exception $e) {
+                return [
+                    'success' => false,
+                    'msg' => $e->getMessage(),
+                ];
+            }
+        }
+
+        $model = Workflow::findOne(['id' => $id]);
+
+        return $this->renderAjax('add', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * 删除审批流程
+     * @param $id
+     * @return array
+     */
+    public function actionDelete($id)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $res = Workflow::delWorkflow($id);
+        return [
+            'success' => $res,
+            'msg' => '',
+        ];
+    }
 }

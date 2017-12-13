@@ -10,8 +10,9 @@
 
 namespace anlewo\workflow\models;
 
-use yii\db\ActiveRecord;
+use Anlewo\SDK\Gateway\UserTable;
 use Yii;
+use yii\db\ActiveRecord;
 
 class WorkflowSub extends ActiveRecord
 {
@@ -50,8 +51,7 @@ class WorkflowSub extends ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id', 'level', 'workflowId', 'created', 'modified'], 'integer'],
+            [['level', 'workflowId', 'created', 'modified'], 'integer'],
             [['approvalr', 'copyGive', 'setting'], 'string'],
             [['levalName'], 'string', 'max' => 64],
             [['creater', 'modifier'], 'string', 'max' => 24],
@@ -76,5 +76,21 @@ class WorkflowSub extends ActiveRecord
             'modifier' => '更新人',
             'setting' => '数据设置',
         ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            'add' => ['level', 'levalName', 'workflowId', 'approvalr', 'copyGive', 'created', 'creater'],
+        ];
+    }
+
+    /**
+     * 获取用户列表
+     * @return array
+     */
+    public function getUserList()
+    {
+        return UserTable::getUserAndRole();
     }
 }

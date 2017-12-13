@@ -2,18 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5348150-cd01-4b3c-9641-6a75d1189b71" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/controllers/WorkflowSubController.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/models/search/WorkflowSubSearch.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow-sub/list.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow/add.php" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow/js/add.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow/js/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow-sub/add-sub.php" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow-sub/js/add-sub.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/views/workflow-sub/js/list.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/WorkflowController.php" afterPath="$PROJECT_DIR$/controllers/WorkflowController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/WorkflowSubController.php" afterPath="$PROJECT_DIR$/controllers/WorkflowSubController.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/Workflow.php" afterPath="$PROJECT_DIR$/models/Workflow.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/WorkflowSub.php" afterPath="$PROJECT_DIR$/models/WorkflowSub.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/search/WorkflowSearch.php" afterPath="$PROJECT_DIR$/models/search/WorkflowSearch.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/search/WorkflowSubSearch.php" afterPath="$PROJECT_DIR$/models/search/WorkflowSubSearch.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/workflow-sub/list.php" afterPath="$PROJECT_DIR$/views/workflow-sub/list.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/workflow/add.php" afterPath="$PROJECT_DIR$/views/workflow/add.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/workflow/index.php" afterPath="$PROJECT_DIR$/views/workflow/index.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/workflow/js/index.js" afterPath="$PROJECT_DIR$/views/workflow/js/index.js" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -215,17 +215,18 @@
       <workItem from="1512611848346" duration="9546000" />
       <workItem from="1512955119256" duration="4273000" />
       <workItem from="1512963451803" duration="5375000" />
-      <workItem from="1512986666755" duration="1240000" />
+      <workItem from="1512986666755" duration="1845000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22347000" />
+    <option name="totallyTimeSpent" value="22952000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1855" height="1057" extended-state="0" />
+    <editor active="true" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26091763" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26091763" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />

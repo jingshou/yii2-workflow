@@ -27,9 +27,10 @@ $this->registerJs($this->render('js/add.js'));
     <?php $form = ActiveForm::begin([
         'id' => 'frm-create',
         'method' => 'post',
-        'action' => Url::to(['add']),
+//        'action' => Url::to(['add']),
         'type' => ActiveForm::TYPE_HORIZONTAL
     ]); ?>
+    <?= $form->field($model,'id')->hiddenInput()->label(false);?>
     <div class="modal-content">
         <div class="modal-header clearfix">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">

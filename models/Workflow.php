@@ -69,14 +69,58 @@ class Workflow extends ActiveRecord
     /**
      * 检测是否存在相同类型审批类型
      * @param $type
+     * @param $id
      * @return bool
      * @throws \Exception
      */
-    public static function exitWorkflow($type)
+    public static function exitWorkflow($type, $id = 0)
     {
-        $model = self::find()->where(['type' => $type, 'isDel' => 0])->one();
+        $model = self::find()
+            ->where(['type' => $type, 'isDel' => 0])
+            ->andFilterWhere(['<>', 'id', $id])
+            ->one();
+
         if (!empty($model)) {
             throw new \Exception('审批类型已经存在，请更新或删除！');
+        }
+        return true;
+    }
+
+    /**
+     * 编辑审批流程
+     * @param $data
+     * @return bool
+     * @throws \Exception
+     */
+    public static function editWorkflow($data)
+    {
+        $model = self::findOne($data['id']);
+        if (empty($model)) {
+            throw new \Exception('审批类型不存在');
+        }
+
+        self::exitWorkflow($data['type'], $model->id);
+
+        $model->scenario = 'edit';
+        if (!$model->load($data, '') || !$model->save()) {
+            throw new \Exception(print_r($model->getErrors(), true));
+        }
+
+        return true;
+    }
+
+    /**
+     * 删除审批流程
+     * @param $id
+     * @return bool
+     */
+    public static function delWorkflow($id)
+    {
+        $model = self::findOne($id);
+        $model->scenario = 'del';
+        $model->isDel = 1;
+        if (!$model->save()) {
+            return false;
         }
         return true;
     }
@@ -117,10 +161,10 @@ class Workflow extends ActiveRecord
     public function rules()
     {
         return [
-            [['id'], 'required'],
-            [['id', 'type', 'created', 'modifier', 'isDel'], 'integer'],
+            [['name', 'type'], 'required'],
+            [['type', 'created', 'modified', 'isDel'], 'integer'],
             [['name'], 'string', 'max' => 64],
-            [['creater', 'modified'], 'string', 'max' => 24],
+            [['creater', 'modifier'], 'string', 'max' => 24],
         ];
     }
 
@@ -131,8 +175,8 @@ class Workflow extends ActiveRecord
     {
         return [
             'id' => '工作流程Id',
-            'name' => '审批类型名称',
-            'type' => '审批类型：1：采购单审批 2：入库单审批 3：集采审批 4：对账单审批 5：wms入库调整 6：退款审批',
+            'name' => '审批名称',
+            'type' => '审批类型',
             'created' => '创建时间',
             'creater' => '创建人',
             'modifier' => '更新时间',
@@ -145,6 +189,8 @@ class Workflow extends ActiveRecord
     {
         return [
             'add' => ['name', 'type', 'created', 'creater'],
+            'del' => ['isDel'],
+            'edit' => ['name', 'type', 'modifier', 'modified'],
         ];
     }
 }

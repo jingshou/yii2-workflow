@@ -12,6 +12,7 @@ use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
+$this->registerJs($this->render('js/list.js'));
 ?>
 <div class="box box-solid">
     <?= GridView::widget([
@@ -30,16 +31,12 @@ use yii\helpers\Url;
         'toggleData' => false,
         'columns' => [
             [
-                'attribute' => 'id',
-                'width' => '100px',
-            ],
-            [
                 'attribute' => 'level',
-                'width' => '100px'
+                'width' => '50px'
             ],
             [
                 'attribute' => 'levalName',
-                'width' => '100px'
+                'width' => '120px'
             ],
             [
                 'attribute' => 'approvalr',
@@ -79,3 +76,6 @@ use yii\helpers\Url;
     ]);
     ?>
 </div>
+
+<!-- 新增内容 -->
+<div id="add-workflow-sub-con" class="modal order-modal fade" role="dialog"></div>

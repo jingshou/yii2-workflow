@@ -10,8 +10,9 @@
 
 namespace anlewo\workflow\controllers;
 
-use anlewo\workflow\models\search\WorkflowSearch;
 use anlewo\workflow\models\search\WorkflowSubSearch;
+use anlewo\workflow\models\WorkflowSub;
+use kartik\form\ActiveForm;
 use Yii;
 use yii\web\Controller;
 use yii\web\Response;
@@ -40,19 +41,29 @@ class WorkflowSubController extends Controller
      */
     public function actionAdd()
     {
-        $search = new WorkflowSearch();
+        $search = new WorkflowSubSearch();
+        $search->scenario = 'add';
 
         if (Yii::$app->request->isPost) {
             Yii::$app->response->format = Response::FORMAT_JSON;
-            try {
-                $data = Yii::$app->request->post('WorkflowSearch');
+            $data = Yii::$app->request->post();
+            $search->load($data);
 
-                $data = array_merge($data, [
+            if (!$search->validate()) {
+                return [
+                    'success' => false,
+                    'validation' => ActiveForm::validate($search),
+                ];
+            }
+
+            try {
+
+                $data = array_merge($search->toArray(), [
                     'creater' => Yii::$app->getUser()->identity->name,
                     'created' => time(),
                 ]);
 
-                $res = Workflow::addWorkflow($data);
+                $res = WorkflowSub::addSub($data);
 
                 return [
                     'success' => true,
@@ -66,7 +77,7 @@ class WorkflowSubController extends Controller
             }
         }
 
-        return $this->renderAjax('add', [
+        return $this->renderAjax('/workflow-sub/add-sub', [
             'model' => $search
         ]);
     }

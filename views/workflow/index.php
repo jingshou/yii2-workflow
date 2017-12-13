@@ -80,11 +80,11 @@ $this->registerJs($this->render('js/index.js'));
                         'view' => function ($url, $model) {
                             return '';
                         },
-                        'delete' => function ($url, $model) {
-                            return Html::a('<i class="glyphicon glyphicon-remove"></i>删除');
-                        },
                         'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>编辑', $url, ['class' => 'update-button']);
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['edit', 'id' => $model->id]), ['id' => 'workflow-edit']);
+                        },
+                        'delete' => function ($url, $model) {
+                            return Html::a('<i class="glyphicon glyphicon-trash"></i>', $url, ['id' => 'workflow-del']);
                         },
                     ],
                 ],
