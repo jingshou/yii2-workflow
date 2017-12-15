@@ -12,13 +12,13 @@ $(function () {
             $('#add-workflow-con').modal({backdrop: 'static', keyboard: true});
             $("#add-workflow-con").html(res).modal('show');
         }).fail(function (res) {
-            ANLEWO.alert(">_<, 服务器受到一个爆击导致失败，请稍后再试~ ", 'error');
+            alert(">_<, 服务器受到一个爆击导致失败，请稍后再试~ ");
             return false;
         });
     });
 
     // 编辑
-    $('#workflow-edit').on('click', function () {
+    $('.workflow-edit').on('click', function () {
         var url = $(this).attr('href');
 
         $.ajax({
@@ -30,7 +30,7 @@ $(function () {
             $('#add-workflow-con').modal({backdrop: 'static', keyboard: true});
             $("#add-workflow-con").html(res).modal('show');
         }).fail(function (res) {
-            ANLEWO.alert(">_<, 服务器受到一个爆击导致失败，请稍后再试~ ", 'error');
+            alert(">_<, 服务器受到一个爆击导致失败，请稍后再试~ ");
             return false;
         });
 
@@ -38,16 +38,12 @@ $(function () {
     });
 
     // 删除
-    $('#workflow-del').on('click', function () {
+    $('.workflow-del').on('click', function () {
         $(this).button('loading');
         var btn = this,
             url = $(this).attr('href');
 
-        ANLEWO.confirm('确认删除？').on(function (ok) {
-            if (!ok) {
-                $(btn).button('reset');
-                return false;
-            }
+        if (confirm('确认删除？')) {
 
             $.ajax({
                 url: url,
@@ -56,18 +52,18 @@ $(function () {
                 data: {}
             }).done(function (res) {
                 if (res.success) {
-                    ANLEWO.alert('删除成功', 'success').on(function () {
-                        location.reload();
-                    });
+                    alert('删除成功');
+                    window.location.reload();
                 } else {
-                    ANLEWO.alert('删除失败', 'error');
+                    alert('删除失败');
                 }
             }).fail(function (res) {
-                ANLEWO.alert(">_<, 服务器受到一个爆击导致失败，请稍后再试~ ", 'error');
+                alert(">_<, 服务器受到一个爆击导致失败，请稍后再试~ ");
                 return false;
             });
-
-        });
+        }else{
+            $(this).button('reset');
+        }
 
         return false;
     });

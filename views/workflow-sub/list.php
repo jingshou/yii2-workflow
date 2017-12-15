@@ -18,13 +18,12 @@ $this->registerJs($this->render('js/list.js'));
     <?= GridView::widget([
         'id' => 'workflow-grid',
         'dataProvider' => $dataProvider,
-        'tableOptions' => ['class' => 'table table-striped table-bordered table-center table-fixed'],
         'panel' => [
             'type' => 'primary',
             'heading' => false,
             'footer' => false,
             'before' => Html::button('<i class="glyphicon glyphicon-plus"></i> 新增明细',
-                ['class' => 'btn btn-success', 'id' => 'add-WorkflowSub-Button', 'data-url' => Url::toRoute(['add'])]),
+                ['class' => 'btn btn-success add-WorkflowSub-Button', 'data-url' => Url::toRoute(['add', 'workflowId' => $search->workflowId])]),
             'after' => false,
         ],
         'export' => false,
@@ -40,11 +39,19 @@ $this->registerJs($this->render('js/list.js'));
             ],
             [
                 'attribute' => 'approvalr',
-                'width' => '200px'
+                'width' => '200px',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->approvalMsg;
+                },
             ],
             [
                 'attribute' => 'copyGive',
-                'width' => '200px'
+                'width' => '200px',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->copyGiveMsg;
+                },
             ],
             [
                 'attribute' => 'setting',
@@ -64,11 +71,13 @@ $this->registerJs($this->render('js/list.js'));
                     'view' => function ($url, $model) {
                         return '';
                     },
-                    'delete' => function ($url, $model) {
-                        return Html::a('<i class="glyphicon glyphicon-remove"></i>删除');
-                    },
                     'update' => function ($url, $model) {
-                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>编辑', $url, ['class' => 'update-button']);
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>编辑',
+                            Url::toRoute(['edit', 'id' => $model->id]),
+                            ['class' => 'btn-xs btn-primary workflow-sub-edit']);
+                    },
+                    'delete' => function ($url, $model) {
+                        return Html::a('<i class="glyphicon glyphicon-remove"></i>删除', $url, ['class' => 'btn-xs btn-danger']);
                     },
                 ],
             ],

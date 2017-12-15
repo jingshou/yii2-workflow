@@ -81,10 +81,13 @@ $this->registerJs($this->render('js/index.js'));
                             return '';
                         },
                         'update' => function ($url, $model) {
-                            return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['edit', 'id' => $model->id]), ['id' => 'workflow-edit']);
+                            return Html::a('<span class="glyphicon glyphicon-pencil"></span> 编辑',
+                                Url::toRoute(['edit', 'id' => $model->id]),
+                                ['class' => 'btn-xs btn-primary update-button workflow-edit']);
                         },
                         'delete' => function ($url, $model) {
-                            return Html::a('<i class="glyphicon glyphicon-trash"></i>', $url, ['id' => 'workflow-del']);
+                            return Html::a('<i class="glyphicon glyphicon-trash"></i> 删除', $url,
+                                ['class' => 'btn-xs btn-danger update-button workflow-del']);
                         },
                     ],
                 ],

@@ -8,10 +8,10 @@
  * @date 17/12/13
  */
 
-use kartik\widgets\ActiveForm;
 use kartik\select2\Select2;
-use yii\helpers\Html;
+use kartik\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Html;
 
 $this->registerJs($this->render('js/add-sub.js'));
 ?>
@@ -29,7 +29,8 @@ $this->registerJs($this->render('js/add-sub.js'));
         'method' => 'post',
         'type' => ActiveForm::TYPE_HORIZONTAL
     ]); ?>
-    <?= $form->field($model,'id')->hiddenInput()->label(false);?>
+    <?= $form->field($model, 'id')->hiddenInput()->label(false); ?>
+    <?= $form->field($model, 'workflowId')->hiddenInput()->label(false); ?>
     <div class="modal-content">
         <div class="modal-header clearfix">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -42,6 +43,7 @@ $this->registerJs($this->render('js/add-sub.js'));
                 ?>
             </div>
             <div class="form-group" style="width:90%">
+                <?php $model->approvalr = !empty($model->approvalr) ? explode(',', $model->approvalr) : ''?>
                 <?= $form->field($model, 'approvalr')
                     ->widget(Select2::className(), [
                         'data' => ArrayHelper::map($model->userList, 'user_id', 'user_name'),
@@ -58,6 +60,7 @@ $this->registerJs($this->render('js/add-sub.js'));
                 ?>
             </div>
             <div class="form-group" style="width:90%">
+                <?php $model->copyGive = !empty($model->copyGive) ? explode(',', $model->copyGive) : ''?>
                 <?= $form->field($model, 'copyGive')
                     ->widget(Select2::className(), [
                         'data' => ArrayHelper::map($model->userList, 'user_id', 'user_name'),

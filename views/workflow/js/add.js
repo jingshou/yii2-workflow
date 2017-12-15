@@ -11,12 +11,12 @@ $(function () {
     $('#btn-submit-create').on('click', function () {
 
         if ($('#workflowsearch-name').val() == '') {
-            showTooltip(this, '审批名称不能为空');
+            alert('审批名称不能为空');
             return false;
         }
 
         if ($('#workflowsearch-type option:selected').val() == '') {
-            showTooltip(this, '审批类型不能为空');
+            alert('审批类型不能为空');
             return false;
         }
 
@@ -25,7 +25,6 @@ $(function () {
 });
 
 var formSubmit = function (btn, url, data) {
-
     $(btn).button('loading');
     $.ajax({
         url: url,
@@ -34,32 +33,17 @@ var formSubmit = function (btn, url, data) {
         cache: false,
         dataType: 'json',
     }).done(function (res) {
+        $(btn).button('reset');
         if (res.success) {
-            ANLEWO.alert(res.msg, 'success').on(function () {
-                $(btn).button('reset');
-                location.reload();
-            });
+            alert(res.msg);
+            window.location.reload();
         } else {
-            ANLEWO.alert(res.msg, 'error');
-            $(btn).button('reset');
+            alert(res.msg);
         }
     }).fail(function (res) {
         $(btn).button('reset');
-        ANLEWO.alert(">_<, 出错了，请稍后再试或联系技术部~ ", 'error');
+        alert(">_<, 出错了，请稍后再试或联系技术部~ ");
         return false;
     });
     return false;
-}
-
-var showTooltip = function (btn, title) {
-    $(btn).tooltip({
-        container: 'body',
-        title: title,
-        placement: 'left',
-        trigger: 'manual',
-    }).tooltip('show');
-    setTimeout(function () {
-        $(btn).button('reset');
-        $(btn).tooltip('destroy');
-    }, 3000);
 }

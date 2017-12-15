@@ -16,7 +16,7 @@ $(function () {
 
 var formSubmit = function (btn, url, data, form) {
 
-    $(btn).button('loading');
+    $(btn).attr('disabled');
     $.ajax({
         url: url,
         type: "post",
@@ -24,20 +24,19 @@ var formSubmit = function (btn, url, data, form) {
         cache: false,
         dataType: 'json',
     }).done(function (res) {
-        $(btn).button('reset');
+        $(btn).removeAttr('disabled');
 
         if (res.success) {
-            ANLEWO.alert(res.msg, 'success').on(function () {
-                location.reload();
-            });
+            alert(res.msg)
+            window.location.reload();
         } else if (res.validation) {
             $(form).yiiActiveForm('updateMessages', res.validation, true);
         } else {
-            ANLEWO.alert(res.msg, 'error');
+            alert(res.msg);
         }
     }).fail(function (res) {
-        $(btn).button('reset');
-        ANLEWO.alert(">_<, 出错了，请稍后再试或联系技术部~ ", 'error');
+        $(btn).removeAttr('disabled');
+        alert(">_<, 出错了，请稍后再试或联系技术部~ ");
         return false;
     });
     return false;

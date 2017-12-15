@@ -24,6 +24,12 @@ class WorkflowSub extends ActiveRecord
         return '{{%workflow_sub}}';
     }
 
+    /**
+     * 添加明细
+     * @param $data
+     * @return bool
+     * @throws \Exception
+     */
     public static function addSub($data)
     {
         $trans = Yii::$app->db->beginTransaction();
@@ -31,7 +37,14 @@ class WorkflowSub extends ActiveRecord
 
             $model = new self();
             $model->scenario = 'add';
-            if (!$model->load($data, '') || !$model->save()) {
+
+            if (!$model->load($data, '')) {
+                throw new \Exception($model->getErrors());
+            }
+
+            $model->level = self::getLevelId($model->workflowId);
+
+            if (!$model->save()) {
                 throw new \Exception($model->getErrors());
             }
 
@@ -43,6 +56,37 @@ class WorkflowSub extends ActiveRecord
             $trans->rollBack();
             throw new \Exception($e->getMessage());
         }
+    }
+
+    /**
+     * 获取级别
+     * @return int|mixed
+     */
+    private static function getLevelId($workflowId)
+    {
+        $model = self::find()->where(['workflowId' => $workflowId])->orderBy('id desc')->one();
+        return empty($model) ? 1 : $model->level + 1;
+    }
+
+    /**
+     * 编辑审批明细
+     * @param $data
+     * @return bool
+     * @throws \Exception
+     */
+    public static function editSub($data)
+    {
+        $model = self::findOne($data['id']);
+        if (empty($model)) {
+            throw new \Exception('审批明细不存在');
+        }
+
+        $model->scenario = 'edit';
+        if (!$model->load($data, '') || !$model->save()) {
+            throw new \Exception(print_r($model->getErrors(), true));
+        }
+
+        return true;
     }
 
     /**
@@ -81,9 +125,11 @@ class WorkflowSub extends ActiveRecord
     public function scenarios()
     {
         return [
-            'add' => ['level', 'levalName', 'workflowId', 'approvalr', 'copyGive', 'created', 'creater'],
+            'add' => ['level', 'levalName', 'workflowId', 'approvalr', 'copyGive', 'created', 'creater', 'setting'],
+            'edit' => ['levalName', 'approvalr', 'copyGive', 'modified', 'modifier', 'setting'],
         ];
     }
+
 
     /**
      * 获取用户列表
